@@ -8,8 +8,8 @@ urlpatterns = [
     url(r'^get_vcode/', views.get_vcode),
     #send_vcode
     url(r'^submit_vcode/', views.submit_vcode),
-    # #get_profile
-    # url(r'^get_profile/', views.get_profile),
+    #get_profile
+    url(r'^get_profile/', views.get_profile),
     # #set_profile
     # url(r'^set_profile/', views.set_profile),
     # #upload_avtar

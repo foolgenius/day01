@@ -39,32 +39,31 @@ class User_module(models.Model):
 
 
 
-# class Profile(models.Model):
-#     uid = id
-#     dating_sex = models.CharField(max_length=8, choices=User_module.SEX)
-#     locations = models.CharField(max_length=16, choices=User_module.LOCATION)
+class Profile(models.Model):
+    uid = id
+    dating_sex = models.CharField(max_length=8, choices=User_module.SEX)
+    locations = models.CharField(max_length=16, choices=User_module.LOCATION)
+
+    min_distance = models.IntegerField(default=1)
+    max_distance = models.IntegerField(default=30)
+
+    min_dating_age = models.IntegerField(default=18)
+    max_dating_age = models.IntegerField(default=50)
+
+    vibration = models.BooleanField(default=True)
+    only_matche = models.BooleanField(default=True)
+    auto_play = models.BooleanField(default=True)
 #
-#     min_distance = models.IntegerField(default=1)
-#     max_distance = models.IntegerField(default=30)
-#
-#     min_dating_age = models.IntegerField(default=18)
-#     max_dating_age = models.IntegerField(default=30)
-#
-#     vibration = models.BooleanField(default=True)
-#     only_matche = models.BooleanField(default=True)
-#     auto_play = models.BooleanField(default=True)
-#
-#     def to_dict(self):
-#         pass
-#         # return{
-#         #     id
-#         #     dating_sex
-#         #     locations
-#         #     min_distance
-#         #     max_distance
-#         #     min_dating_age
-#         #     max_dating_age
-#         #     vibration
-#         #     only_matche
-#         #     auto_play
-#         # }
+    def to_dict(self):
+        return {
+        'id': self.id,
+        'dating_sex': self.dating_sex,
+        'dating_location': self.locations,
+        'min_distance': self.min_distance,
+        'max_distance': self.max_distance,
+        'min_dating_age': self.min_dating_age,
+        'max_dating_age': self.max_dating_age,
+        'vibration': self.vibration,
+        'only_matche': self.only_matche,
+        'auto_play': self.auto_play,
+    }

@@ -9,12 +9,13 @@ from django.shortcuts import render
 
 # Create your views here.
 from UserApp.logics import send_vcode
-from UserApp.models import User_module
+from UserApp.models import User_module, Profile
 
 
 def index(requeset):
-    a = cache.get(keys.VCODE % '15255665851')
-    print(a)
+    # a = cache.get(keys.VCODE % '15255665851')
+    uid = requeset.session.get('uid')
+    print(uid)
     return HttpResponse('Successful!')
 
 #get_vcode_api
@@ -50,27 +51,18 @@ def submit_vcode(request):
         except User_module.DoesNotExist:
             user = User_module.objects.create(u_phonenum=phonenum, u_name=phonenum)
 
-            request.session['uid'] = user.id
-            return JsonResponse({'code':0, 'data':user.to_dict()})
+        request.session['uid'] = user.id
+        print(request.session['uid'])
+        return JsonResponse({'code':0, 'data':user.to_dict()})
     else:
         return JsonResponse({'code':1001, 'data': None})
 
 
+def get_profile(request):
+    uid = request.session['uid']
+    profile, _ = Profile.objects.get_or_create(id=uid)
 
-#
-# def get_profile(request):
-#     """get profile"""
-#     #get current user
-#     uid = request.session['uid']
-#     # try:
-#     #     profile = Profile.objects.get(id=uid)
-#     # except Profile.DoesNotexist:
-#     #     profile.objects.create(id = uid)
-#
-#     profile, _ = Profile.objects.get_or_create(id=uid)
-#
-#     return JsonResponse({'code': stat.OK, 'data':profile.to_dict()})
-
+    return JsonResponse({'code': stat.VCODE_ERR, 'data': profile.to_dict()})
 
 # def set_profile(request):
 #     u_name = None

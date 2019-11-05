@@ -30,6 +30,7 @@ def send_vcode(phonenum):
         return False
     else:
         cache.set(keys.VCODE %phonenum, vcode, timeout=1800)
+        # cache.set(keys.VCODE % phonenum, vcode, 1800)
         cache_vcode = cache.get(keys.VCODE % phonenum)
         print(vcode)
         print('============')
