@@ -1,0 +1,6 @@
+"""programs status"""
+
+OK = 0
+SMS_ERR = 1000
+VCODE_ERR = 1001
+LOGIN_REQUIRED = 1002

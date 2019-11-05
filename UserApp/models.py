@@ -14,7 +14,6 @@ class User_module(models.Model):
         ('Anhui', 'anhui'),
         ('Hunan', 'hunan'),
         ('Henan', 'hunan')
-
     )
     u_name = models.CharField(max_length=32, verbose_name='name')
     u_phonenum = models.CharField(max_length=20, unique=True,verbose_name='phone')
@@ -23,5 +22,49 @@ class User_module(models.Model):
     u_avatar = models.CharField(max_length=256, verbose_name='avatar')
     u_location = models.CharField(max_length=16, choices=LOCATION, default='Beijing',verbose_name='location')
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.u_name,
+            'phonenum': self.u_phonenum,
+            'sex': self.u_sex,
+            'birthday': self.u_birthday,
+            'avatar': self.u_avatar,
+            'location': self.u_location,
+        }
+
     class Meta:
         db_table = 'user_module'
+
+
+
+
+# class Profile(models.Model):
+#     uid = id
+#     dating_sex = models.CharField(max_length=8, choices=User_module.SEX)
+#     locations = models.CharField(max_length=16, choices=User_module.LOCATION)
+#
+#     min_distance = models.IntegerField(default=1)
+#     max_distance = models.IntegerField(default=30)
+#
+#     min_dating_age = models.IntegerField(default=18)
+#     max_dating_age = models.IntegerField(default=30)
+#
+#     vibration = models.BooleanField(default=True)
+#     only_matche = models.BooleanField(default=True)
+#     auto_play = models.BooleanField(default=True)
+#
+#     def to_dict(self):
+#         pass
+#         # return{
+#         #     id
+#         #     dating_sex
+#         #     locations
+#         #     min_distance
+#         #     max_distance
+#         #     min_dating_age
+#         #     max_dating_age
+#         #     vibration
+#         #     only_matche
+#         #     auto_play
+#         # }
