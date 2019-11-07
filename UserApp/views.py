@@ -1,5 +1,6 @@
 from django.core.cache import cache
 
+from UserApp.forms import UsermoduleForm, ProfileForm
 from common import stat
 
 from common import keys
@@ -14,8 +15,10 @@ from UserApp.models import User_module, Profile
 
 def index(requeset):
     # a = cache.get(keys.VCODE % '15255665851')
-    uid = requeset.session.get('uid')
-    print(uid)
+    # uid = requeset.session.get('uid')
+    # print(uid)
+    x = requeset.path
+    print(x)
     return HttpResponse('Successful!')
 
 #get_vcode_api
@@ -62,14 +65,17 @@ def get_profile(request):
     uid = request.session['uid']
     profile, _ = Profile.objects.get_or_create(id=uid)
 
-    return JsonResponse({'code': stat.VCODE_ERR, 'data': profile.to_dict()})
+    return JsonResponse({'code': stat.OK, 'data': profile.to_dict()})
 
-# def set_profile(request):
-#     u_name = None
-#     u_sex = None
-#     u_birthday = None
-#     u_location = None
-#     return None
+def set_profile(request):
+    user_form = UsermoduleForm(request.POST)
+    if not user_form.is_valid():
+        return JsonResponse({'code':stat.USERMODULE_FORM_ERR, 'data':None})
+
+    profile_form = ProfileForm(request.POST)
+    if not profile_form.is_valid():
+        return JsonResponse({'code':stat.PROFILE_FORM_ERR,'data':None} )
+
 #
 #
 # def upload_avatar(request):
