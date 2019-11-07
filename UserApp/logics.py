@@ -39,3 +39,14 @@ def send_vcode(phonenum):
         print(cache_vcode)
 
         return True
+
+
+def save_upload_avatar(uid, avatar_file):
+    avatar_name = "Avatar-%s" % uid
+    avatar_path = '/tmp/%s' % avatar_name
+
+    with open(avatar_path, 'wb') as fp:
+        for chunk in avatar_file.chunks():
+            fp.write(chunk)
+
+    return avatar_name, avatar_path

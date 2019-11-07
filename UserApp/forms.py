@@ -1,6 +1,7 @@
-from django.forms import forms
+from django import forms
 
-from UserApp.models import Profile, User_module
+from UserApp.models import Profile
+from UserApp.models import User_module
 
 
 class UsermoduleForm(forms.ModelForm):

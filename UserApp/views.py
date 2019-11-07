@@ -1,5 +1,8 @@
+import os
+
 from django.core.cache import cache
 
+from UserApp import logics
 from UserApp.forms import UsermoduleForm, ProfileForm
 from common import stat
 
@@ -11,6 +14,8 @@ from django.shortcuts import render
 # Create your views here.
 from UserApp.logics import send_vcode
 from UserApp.models import User_module, Profile
+
+from libs.qn_clound import upload_to_qn
 
 
 def index(requeset):
@@ -76,7 +81,19 @@ def set_profile(request):
     if not profile_form.is_valid():
         return JsonResponse({'code':stat.PROFILE_FORM_ERR,'data':None} )
 
-#
-#
-# def upload_avatar(request):
-#     return None
+
+def upload_avatar(request):
+    uid = request.session['uid']
+    avatar_file = request.FILES.get('avatar')
+
+    avatar_name, avatar_path = logics.save_upload_avatar(uid, avatar_file)
+
+    avatar_url = upload_to_qn(avatar_name, avatar_path)
+
+    user = User_module.objects.create(id=uid)
+    user.u_avatar = avatar_url
+    user.save()
+
+    os.remove(avatar_path)
+
+    return JsonResponse({'code':0, 'data':None})

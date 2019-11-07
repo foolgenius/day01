@@ -12,6 +12,6 @@ urlpatterns = [
     url(r'^get_profile/', views.get_profile),
     #set_profile
     url(r'^set_profile/', views.set_profile),
-    # #upload_avtar
-    # url(r'^upload_avatar/', views.upload_avatar),
+    #upload_avtar
+    url(r'^upload_avatar/', views.upload_avatar),
 ]
